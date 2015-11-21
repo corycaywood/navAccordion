@@ -5,9 +5,11 @@ This project is a jQuery plugin that can be used to easily add accordion expand/
 ## Features to note
 
 > This plugin has self contained styling for positioning the expand and collapse buttons, so there is no css that needs to be added to your template for this to work correctly. However, you will probably still want to do some styling to the accordion expand/collapse buttons such as applying a background color. Use the class `.accordion-btn` for stying the buttons.
-\s
+
+
 > By default, the plugin will leave the parent page `href` intact. So clicking the accordion button will expand the child navigation but clicking on the parent link text will go to the page. However, if a page is set to be a header only (no link on the `<a>` tag), the whole link will act as the expand/collapse button.
-\s
+
+
 > It will automatically expand the sub navigation for the currently selected channel (the `<li>` that has the class "selected") when the page first loads.
 
 ## How to use
