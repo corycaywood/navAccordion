@@ -1,4 +1,5 @@
-//Nav Accordion Plugin
+/* Nav Accordion Plugin v1.1
+************************************/
 (function($){
 	$.fn.navAccordion = function(options){
 		this.each(function(){
@@ -16,7 +17,9 @@
 				parentElement: "li",  //Parent element type, class or ID - you don't need to change this if you're using a ul > li > ul pattern
 				childElement: "ul",   //Child element type, class or ID - you don't need to change this if you're using a ul > li > ul pattern
 				headersOnly: false,  //False is default - setting to true will make any link with sub-nav behave as if it were set to header only, making the link inaccessible - this option is useful if you are using the plugin for a non-navigation area 
-				headersOnlyCheck: false // False is default - set to true to apply the accordion only to links that are set as "header only" (have no href)
+				headersOnlyCheck: false, // False is default - set to true to apply the accordion only to links that are set as "header only" (have no href)
+				delayLink: false,  //Delay following the href of links until after the accordion the has expanded
+				delayAmount: null //Time in milliseconds to delay before following href - will use "slideSpeed" by default if nothing else is set
 			}, options);
 			
 			var container = this,
@@ -24,7 +27,7 @@
 				multi = settings.multipleLevels ? '': ' > ' + settings.childElement + ' > ';
 				
 			//Add class to container
-			jQuery(container)
+			$(container)
 				.addClass('accordion-nav');
 			
 			//Apply has-subnav class to lis with uls - also add accordion buttons with styles
@@ -80,6 +83,29 @@
 										'text-align': 'center'
 									});
 				}
+				
+				//Delay Link Mode
+				if (settings.delayLink && !settings.headersOnly) {
+					var currentThis = this,
+						speed = settings.delayAmount != null ? settings.delayAmount : settings.slideSpeed;
+					if (speed == "fast") {
+						speed = 200;
+					} else if (speed == "slow") {
+						speed = 600;
+					}
+					$('> a', currentThis).on('click',function(e){
+						if (!$('> .accordion-btn-wrap', currentThis).hasClass("accordion-active")) {
+							e.preventDefault();
+							var href = $(this).attr('href');
+							clickToggle($('> .accordion-btn-wrap', currentThis));
+							//Go to link after delay
+							setTimeout(function(){
+								window.location = href;
+							}, speed)
+						}
+					})
+				}
+				
 			});
 			
 			var selectedNavAccordion = $(settings.parentElement + '.' + settings.selectedClass + ' > .accordion-btn-wrap', container);
@@ -104,6 +130,7 @@
 				e.preventDefault();
 				clickToggle(this);
 			});
+			
 			
 			/* Functions 
 			*******************************/

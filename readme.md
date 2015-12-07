@@ -51,3 +51,7 @@ $('.mainNav').navAccordion({
 - `parentElement` - default is `li` - parent element type, class or ID - you don't need to change this if you're using a ul > li > ul pattern
 
 - `childElement` - default is `ul` - child element type, class or ID - you don't need to change this if you're using a ul > li > ul pattern
+
+- delayLink - default is `false` - delays the browser from following the href of links that have sub-nav until after the accordion has expanded
+
+-delayAmount - default is the same as `slideSpeed` - time in milliseconds to delay before following href - will use "slideSpeed" by default if nothing else is set - this only applies if `delayLink` is enabled
