@@ -1,7 +1,7 @@
 /* Nav Accordion Plugin v1.1
 ************************************/
 (function($){
-	$.fn.navAccordion = function(options){
+	$.fn.navAccordion = function(options, callback){
 		this.each(function(){
 			
 			//Options
@@ -131,6 +131,11 @@
 				clickToggle(this);
 			});
 			
+			//Callback
+			if (typeof callback == "function") {
+				callback();
+			}
+			
 			
 			/* Functions 
 			*******************************/
@@ -138,7 +143,8 @@
 				function clickToggle(element) {
 					var nextChild = $(element).next(settings.childElement),
 						currentExpandBtn = $('.accordion-expanded', element),
-						currentCollapseBtn = $('.accordion-collapsed', element);
+						currentCollapseBtn = $('.accordion-collapsed', element),
+						parentObj = $(element).closest(settings.parentElement);
 					if (nextChild.is(':visible')) {
 						nextChild
 							.slideUp(settings.slideSpeed);
@@ -148,6 +154,7 @@
 							.css('display', 'none');
 						currentCollapseBtn
 							.css('display', 'inline-block');
+						$(settings.parentElement, container).removeClass('active');
 					} else {
 						$(element).closest(settings.childElement).find('.accordion-active')
 							.removeClass('accordion-active')
@@ -157,6 +164,7 @@
 									.css('display', 'none')
 									.parent().find('.accordion-collapsed')
 										.css('display', 'inline-block');
+						$(settings.parentElement, container).removeClass('active');
 						$(element)
 							.addClass('accordion-active');
 						nextChild
@@ -165,6 +173,7 @@
 							.css('display', 'inline-block');
 						currentCollapseBtn
 							.css('display', 'none');
+						parentObj.addClass('active');
 					}
 				}
 				
@@ -179,9 +188,12 @@
 						selectedNavAccordion.addClass('accordion-active')
 							.next(settings.childElement)
 								.css('display', 'block');
+						selectedNavAccordion.closest(settings.parentElement)
+							.addClass('active');
 						} else {
 							$(settings.parentElement + '.' + settings.selectedClass + ' > ' + settings.childElement, container)
 								.css('display', 'block');
+								$(settings.parentElement + '.' + settings.selectedClass).addClass('active');
 						}
 					}
 				}
