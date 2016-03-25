@@ -1,4 +1,4 @@
-/* Nav Accordion Plugin v1.1
+/* Nav Accordion Plugin v1.1.2
 ************************************/
 (function($){
 	$.fn.navAccordion = function(options, callback){
@@ -154,7 +154,7 @@
 							.css('display', 'none');
 						currentCollapseBtn
 							.css('display', 'inline-block');
-						$(settings.parentElement, container).removeClass('active');
+						parentObj.add(parentObj.siblings('.active')).add(parentObj.find('.active')).removeClass('active');
 					} else {
 						$(element).closest(settings.childElement).find('.accordion-active')
 							.removeClass('accordion-active')
@@ -164,7 +164,7 @@
 									.css('display', 'none')
 									.parent().find('.accordion-collapsed')
 										.css('display', 'inline-block');
-						$(settings.parentElement, container).removeClass('active');
+						parentObj.add(parentObj.siblings('.active')).add(parentObj.find('.active')).removeClass('active');
 						$(element)
 							.addClass('accordion-active');
 						nextChild
